@@ -1,0 +1,51 @@
+Question Number,Question,Options,Correct Answer,Difficulty Level
+1,Self-generating  type transducers are _________ transducers.,Active //@ Passive //@ Secondary //@ Inverse,A,EASY
+2,Which of the following is a digital transducer?,Strain Gauge //@ Encoder //@ Thermistor //@ LVDT,B,EASY
+3,Isolation amplifiers are also called as ____.,DC amplifiers //@ Output amplifier //@ Inverting amplifier //@ Iso -amps,D,EASY
+4,CMRR is more in ________.,Single ended amplifier //@ Differential amplifier //@ Inverting operational amplifier //@ Chopper amplifier,B,MEDIUM
+5,"In X-Y recorders, the self-balancing  potentiometers plotemf as a function of ______.",Another emf //@ Frequency //@ Time //@ Pressure,A,MEDIUM
+6,Stress and strain curves are plotted using______.,Magnetic tape recording //@ X-Y recording //@ Galvanometric //@ PMMC writing systems,B,MEDIUM
+7,Which of the following can be measured with the help of piezo electric crystal?,Force //@ Velocity //@ Sound //@ Pressure,A,EASY
+8,Piezo -electric transducers are ________.,Passive transducers //@ Inverse transducers //@ Digital transducers //@ Pul se transducers,B,EASY
+9,_________ fiber is used in interferometric instruments.,Monomode //@ Multimode //@ Birefringent //@ Coated,A,MEDIUM
+10,Fiber Optic sensor can be used to sense_________.,Displacement //@ Power //@ Current //@ Resistance,A,EASY
+11,Venturi is associated with_______.,venous blood pressure //@ Digital plethysmography //@ Dialysate flow in artificial kidney //@ Blood flow in heart lung machine.,D,HARD
+12,Pulse communication system that is inherently highly immune to noise is__________.,PCM //@ PAM //@ PPM //@ PAM,A,MEDIUM
+13,One of the following is tracking radar.,Monostatic radar //@ Bistatic radar //@ Monopulse radar //@ Secondary surveillance radar.,C,HARD
+14,A dynamometer Wattmeter is connected in AC Circuit. The reading will be,V-A Product //@ average power //@ peak Power //@ instantaneous power,B,MEDIUM
+15,Loss of charge method is suitable for medium resistances.,True //@ False,A,EASY
+16,The decibel is a measure of,Current //@ Voltage //@ Power //@ Power level,D,EASY
+17,"If the current gain of the amplifier is X, its voltage gain is Y, then its power gain will be",X/Y //@ X*Y //@ X+Y //@ X-Y,B,EASY
+18,The amplifier which has no drift is called as,Differential amplifier //@ DC amplifier //@ Single ended amplifier //@ Chopper amplifier,D,MEDIUM
+19,A recorder is said to have good frequency response when the sensitivity of the system is _________ for all frequencies present in the signal.,Unity //@ Zero //@ Infinity //@ Constant,D,MEDIUM
+20,Storage oscilloscope operates on the principle of,Primary emissi on //@ Deflection //@ Secondary emission //@ Diffusion,C,MEDIUM
+21,Feedback in an amplifier always helps in,Increasing its input impedance //@ Increasing its gain //@ Controlling its output //@ Stabilizes its gain,D,MEDIUM
+22,For biomedical applications the mostly used amplifier is,Single ended amplifier //@ Differential amplifier //@ Inverting operational amplifier //@ Chopper amplifier,B,MEDIUM
+23,The CMRR of a typical IC OPAMP is,70 dB //@ 80 dB //@ 85 dB //@ 75 dB,B or C (depending on the specific OPAMP),EASY
+24,A ———— – is usually a display device used to produce  a paper record of analog wave form.,Graphic pen recorder //@ Electron microscope //@ X-Y recorder //@ Oscilloscope,A,MEDIUM
+25,The difference between the measured value and the true value is called as:,Relative error //@ Absolute error //@ Gross error //@ Probable error,B,EASY
+26,Potentiometer is basically a ____ instrument,Digital //@ Deflecting type //@ Null type //@ Recording,C,EASY
+27,T he synchroscope is an instrument for:,Checking the voltage of the two circuits //@ Checking of phase sequence of the two circuits //@ Indicating the differences of phases and frequencies of two circuits //@ Checking the power factor of the two circuits,C,HARD
+28,The resistance  of a semiconductor  _____________  with temperature.,increases //@ decreases //@ can’t say //@ none of the above,B,EASY
+29,"A circuit made up of combinations of logic gates, with no feedback from output to input.",Sequential logic circuit //@ Combinational logic Circuit //@ Clocked circiuts //@ Asynchronouis circuit,B,MEDIUM
+30,Which of the following has highest input impedance,FET //@ BJT //@ MOSFET //@ Crystal diode,C,MEDIUM
+31,What are in the depletion region?,Positive and negative ions //@ Minority carriers //@ Majority Carriers //@ All of the choices,A,MEDIUM
+32,The specific gravity of a lead -acid battery is a measure of its _____,Battery life //@ Operating temprature //@ State of charge //@ rate of discharge,C,MEDIUM
+33,Avalanche breakdown is primarily dependant on the phenomenon of _______,Do ping //@ Collision //@ Recombination //@ Ionization,D,HARD
+34,Determine which item is not a storage device,Card readers //@ CD -ROM //@ Diskettes //@ Magnetic tape,A,EASY
+35,What instrument is used for measuring radio frequency (rf) power?,Thermocouple ammeter //@ Barretter //@ Strobotac //@ Thermistor,B,HARD
+36,Which one of the following is not a prime number?,31 //@ 61 //@ 71 //@ 91,D,EASY
+37,"How many of the following numbers are divisible by 132 ?  264, 396, 462, 792, 968, 2178, 5184, 6336",4 //@ 5 //@ 6 //@ 7,A,MEDIUM
+38,The sum of all two digit numbers divisible by 5  is,1035 //@ 1245 //@ 1230 //@ 945,D,MEDIUM
+39,"Odd man out: 8, 27, 64, 100, 125, 216, 343",27 //@ 100 //@ 125 //@ 343,B,EASY
+40,"A man can row at 5 kmph in still water. If the velocity of current is 1 kmph and it takes him 1 hour to row to a place and come back,  how far is the place?",2.4Km //@ 2.5Km //@ 3Km //@ 3.6Km,A,MEDIUM
+41,Which word does NOT belong with the others?,Tulip //@ Rose //@ Bud //@ Daisy,C,EASY
+42,"CMM, EOO, GQQ, _____, KUU",GRR //@ GSS //@ ISS //@ ITT,C,MEDIUM
+43,"P 5QR, P 4QS, P 3QT, _____, P 1QV",PQW //@ PQV 2 //@ P 2QU //@ PQ 3U,C,MEDIUM
+44,Cup is to coffee as bowl is to,dish //@ soup //@ spoon //@ food,B,EASY
+45,Arrange the words given below in a meaningful sequence. 1. Key 2. Door 3. Lock 4. Room 5. Switch on,"5, 1, 2, 4, 3 //@ 4, 2, 1, 5, 3 //@ 1, 3, 2, 4,  5 //@ 1, 2, 3, 5, 4",C,MEDIUM
+46,"If FRIEND is coded as HUMJTK, how can CANDLE be written in that code?",DEQJQM //@ DCQHQK //@ EDRIRL //@ ESJFME,C,MEDIUM
+47,"If ZEBRA can be written as 2652181, how can COBRA be written?",302181 //@ 3152181 //@ 31822151 //@ 1182153,A,MEDIUM
+48,Man : Biography : : Nation : ?,History //@ Geography //@ People //@ Leader,A,EASY
+49,A and B are young ones of C. If C is the father of A but B is not the son of C. How are B and C related ?,Niece and uncle //@ Daughter and father //@ Niece and mother //@ Daughter and mother,B,MEDIUM
+50,"2Z5, 7Y7, 14X9, 23W11, 34V13, ….. ?",27U24 //@ 47U15 //@ 45U15 //@ 47V14,B,HARD

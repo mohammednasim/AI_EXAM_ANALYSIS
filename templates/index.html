@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Assistant</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .main-card {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: none;
+        }
+        .card-header {
+            background-color: #4285f4;
+            color: white;
+            border-bottom: none;
+            padding: 2rem;
+        }
+        .nav-tabs .nav-link {
+            border: none;
+            color: #495057;
+            font-weight: 500;
+            padding: 1rem 1.5rem;
+            border-radius: 0;
+        }
+        .nav-tabs .nav-link.active {
+            color: #4285f4;
+            border-bottom: 3px solid #4285f4;
+            font-weight: 600;
+        }
+        .tab-content {
+            padding: 2rem;
+        }
+        .feature-box {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #4285f4;
+            transition: all 0.3s ease;
+        }
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .feature-icon {
+            background-color: rgba(66, 133, 244, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card main-card">
+                    <div class="card-header text-center">
+                        <h1 class="display-6 mb-0">AI Study Assistant</h1>
+                        <p class="mt-2 mb-0">Your comprehensive tool for MCQ extraction, generation, and evaluation</p>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10">
+                                <div class="my-4">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="/extract" class="text-decoration-none">
+                                                <div class="feature-box">
+                                                    <div class="feature-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4285f4" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                                                            <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                                                            <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <h4>Extract MCQs</h4>
+                                                    <p class="text-muted">Upload a PDF with existing MCQs and extract them automatically</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/generate" class="text-decoration-none">
+                                                <div class="feature-box">
+                                                    <div class="feature-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4285f4" class="bi bi-lightbulb" viewBox="0 0 16 16">
+                                                            <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <h4>Generate MCQs</h4>
+                                                    <p class="text-muted">Create new MCQs from your study materials using AI</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/evaluate" class="text-decoration-none">
+                                                <div class="feature-box">
+                                                    <div class="feature-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4285f4" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                                                            <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                                                            <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <h4>Evaluate Exams</h4>
+                                                    <p class="text-muted">Upload student answers and evaluate performance with AI feedback</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-white text-center py-3">
+                        <p class="text-muted mb-0">Powered by Google Gemini AI</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

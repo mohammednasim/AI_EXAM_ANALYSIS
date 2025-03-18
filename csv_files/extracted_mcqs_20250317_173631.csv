@@ -1,0 +1,51 @@
+Question Number,Question,Options,Correct Answer,Difficulty Level
+1,The speed of a universal motor is generally reduced by using,a) gear trains //@ b) V-belts //@ c) Brakes //@ d) chains,,EASY
+2,The efficiency of two identical transformers under load conditions can be determined by,a) Short -circuit  test //@ b) back -to-back test //@ c) Open  circuit test //@ d) any of the above,,MEDIUM
+3,Superposition theorem can be applied only to circuits having,a) Resistive  elements //@ b) Passive elements //@ c) Non-linear  elements //@ d) linear  bilateral elements,,MEDIUM
+4,A star circuit has element of resistance R/2.  The equivalent delta elements will be,a) R/6 //@ b) fi //@ c) 2R //@ d) 4R,,HARD
+5,An Ideal Voltage source has,a) Zero internal resistance //@ b) Open circuit voltage equal to the voltage on full load //@ c) Terminal voltage in proportion to current //@ d) Terminal Voltage in Proportion to load,,MEDIUM
+6,In repulsion motor direction of rotation of motor,a) is opposite to that of brush shift //@ b) is the same as that of brush shift //@ c) is independent of brush shift //@ d) none of the above,,HARD
+7,Burning out of windings is due to,a) Short  circuited capacitor //@ b) capacitor value hiving changed //@ c) Open  circuiting of capacitor //@ d) none of the above,,MEDIUM
+8,For which of the following equipment current rating is not necessary?,a) Circuit breakers //@ b) Isolators //@ c) Load break switch //@ d) Circuit breakers and load break switches,,EASY
+9,"A conductor of length L has current I passing through it, when it is placed parallel to a magnetic field. The force experienced by the conductor will be",a) Zero //@ b) BLI //@ c) B2LI //@ d) BLI2,,MEDIUM
+10,Addition of pentavalent impurity to a semiconductor creates many,a) Free electrons //@ b) Holes //@ c) Valence Electrons //@ d) Bound electrons,,MEDIUM
+11,Which of the following materials is not used for transmission and distribution of electrical power?,a) Copper //@ b) Aluminum //@ c) Steel //@ d) Tungsten,,EASY
+12,"When a step -input is given to an op -amp integrator, the output will be",a) A ramp //@ b) A sinusoidal wave //@ c) A rectangular wave //@ d) A triangular wave with dc bias,,MEDIUM
+13,Excess -3 code is known as,a) Weighted code //@ b) Cyclic  redundancy code //@ c) Self -complementing code //@ d) Algebraic code,,HARD
+14,Electro -mechanical voltage regulators are generally used in,a) Reactors //@ b) generators //@ c) Transformers //@ d) all of the above,,MEDIUM
+15,A rotary converter operates at a,a) Low power fac tor //@ b) High power factor //@ c) Zero power factor //@ d) none of the above,,MEDIUM
+16,Light duty cranes are used in which of the following?,a) Power houses //@ b) Pumping stations //@ c) Automobile workshops //@ d) All of the above,,EASY
+17,Magnetic circuit breaker has _________ trip action.,a) Delayed //@ b) Instantaneous //@ c) Both a & b //@ d) None of the above,,EASY
+18,A power transformer is usually rated in,a) KW //@ b) KVAR //@ c) KWh //@ d) KVA,,EASY
+19,"Submarines for under water movement, are powered by which of the following?",a) Steam accumulators //@ b) Air motors //@ c) Diesel engines //@ d) Batteries,,EASY
+20,The upper or lower cut off frequency is also called ________ frequency,a) Resonant //@ b) Sideband //@ c) 3db //@ d) None of the above,,MEDIUM
+21,When the load resistance equals the generator res istance which of the following will be maximum?,a) Current //@ b) Efficiency of the circuit //@ c) Power in the load resistance //@ d) Voltage across the load resistance,,MEDIUM
+22,The transformer laminations are insulated from each other by,a) Mica  strip //@ b) thi n coat of varnish //@ c) Paper //@ d) any of the above,,EASY
+23,The output voltage of a charger is,a) Less than the battery voltage //@ b) Higher than the battery voltage //@ c) The same as the battery voltage //@ d) none  of the above,,EASY
+24,Calculate the cutoff frequency of a first order low -pass filter for R1=2.5Kohm and C1=0.05microFarad,a) 1.273 kHz //@ b) 12.73 kHz //@ c) 127.3 kHz //@ d) 127.3Hz,,HARD
+25,Admittance relay is _________relay.,a) Impedance //@ b) Directional //@ c) Non -directional //@ d) None of the above,,MEDIUM
+26,Minimum voltage regulation occurs when the power factor of the load is,a) Unity //@ b) lagging //@ c) Leading //@ d) zero,,MEDIUM
+27,Which of the following materials are diamagnetic?,a) Silver //@ b) Copper //@ c) Silver and Copper //@ d) Iron,,EASY
+28,To limit short - circuit  current in a power system are used.,a) Earth wires //@ b) Reactors //@ c) H.R.C. fuses //@ d) Isolators,,MEDIUM
+29,Which plant can never have 100 percent load factor?,a) Base load plant //@ b) Peak load plant //@ c) Nuclear power plant //@ d) Hydro electric plant,,MEDIUM
+30,"If t he supply voltage for a D.C. motor is increased, which of the following will decrease ?",a) Starting torque //@ b) Operating speed //@ c) Full -load current //@ d) All of the above,,MEDIUM
+31,The leakage current across a pn junction is due to,a) Minority carriers //@ b) Majority carriers //@ c) Junction capacitance //@ d) none  of the above,,MEDIUM
+32,The advantage of cables over overhead transmission lines is,a) Easy  maintenance //@ b) low cost //@ c) Can be used in congested areas //@ d) can be used in high voltage circuits,,EASY
+33,Usually wide and sensitive speed control is desired in case of,a) Centrifugal  pumps //@ b) elevators //@ c) Steel  rolling mills //@ d) colliery winders,,MEDIUM
+34,India’s first nuclear power plant was installed at,a) Tarapore //@ b) Kota //@ c) Kalpakam //@ d) None of the above,,EASY
+35,In a commutator,a) Mica  is harder than copper //@ b) mica and copper are equally hard //@ c) copper is harder than mica //@ d) none of the above,,EASY
+36,What least value should be replaced by * in 223*431 so the number become divisible by 9,a) 6 //@ b) 4 //@ c) 5 //@ d) 3,,EASY
+37,A number when divided by the sum of 555 and 445 gives two times their difference as quotient and 30 as remainder. The number is,a) 220030 //@ b) 22030 //@ c) 23030 //@ d) 24030,,MEDIUM
+38,"In a group of ducks and buffaloes, the total number of legs is 24 more than twice the number of heads. Find the total number of buffaloes.",a)8 //@ b) 10 //@ c) 14 //@ d) 12,,MEDIUM
+39,How many seconds will a 500 meter long train take to cross a man walking with a speed of 3 km/hr in the direction of the moving train if the speed of the train is 63 km/hr,a) 25 Seconds //@ b) 30 Seconds //@ c) 28 Seconds //@ d) 35 Seconds,,MEDIUM
+40,"a * b = 2a - 3b + ab, then 3*5 + 5*3 = ?",a) 22 //@ b) 21 //@ c) 20 //@ d) 23,,MEDIUM
+41,Food : Stomach : : Fuel : _____ ?,a) Plane //@ b) Truck //@ c) Engine //@ d) Automobile,,EASY
+42,"SUGARCANE, COFFEE, TOBACCO, RICE",a) SUGARCANE //@ b) COFFEE //@ c) TOBACCO //@ d) RICE,,EASY
+43,"If PRIVATE is coded as 1234567 and RISK is coded as 2398, how is RIVETS coded?",a) 232679 //@ b) 243769 //@ c) 234769 //@ d) 234976,,MEDIUM
+44,"EJO, TYD, INS, XCH?",a) NRW //@ b) MRW //@ c) MSX //@ d) NSX,,HARD
+45,_ nmmn _ mmnn _ mnnm _,a) nmmn //@ b) mnnm //@ c) nnmm //@ d) nmnm,,MEDIUM
+46,A girl introduced a boy as the son of the daughter of the father of her uncle. The boy is girl’s,a) Uncle //@ b) Nephew //@ c) Brother //@ d) Son,,MEDIUM
+47,"According to a military code, SYSTEM is  SYSMET and NEARER is AENRER What is the code for FRACTION?",a) CARFTINO //@ b) CARFNOIT //@ c) FRACNOIT //@ d) CARFTION,,HARD
+48,Jungle : Zoo : : Sea : ?,a) Aquarium //@ b) Harbour //@ c) Water //@ d) Fishery,,EASY
+49,The child jumped _______ to catch the ball.,a) Above //@ b) up //@ c) By //@ d) at,,EASY
+50,How soon _______ the party begin?,a) Is //@ b) will //@ c) was //@ d) none,,EASY

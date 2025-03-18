@@ -1,0 +1,6 @@
+Question,Options,Correct Answer,Difficulty Level
+What is the primary function of the Arithmetic Logic Unit (ALU) within the CPU?,A. Decoding program instructions//@ B. Performing calculations and comparisons of data//@ C. Controlling the machine cycle//@ D. Managing input/output devices,B. Performing calculations and comparisons of data,EASY
+Which generation of computers is characterized by the use of integrated circuits (ICs)?,A. First Generation//@ B. Second Generation//@ C. Third Generation//@ D. Fourth Generation,C. Third Generation,EASY
+A mouse that uses a laser to detect movement and requires a special mat with a grid is called a(n):,A. Mechanical Mouse//@ B. Optomechanical Mouse//@ C. Optical Mouse//@ D. Cordless Mouse,C. Optical Mouse,MEDIUM
+"Which type of memory is volatile, meaning its contents are lost when the computer's power is turned off?",A. ROM//@ B. RAM//@ C. PROM//@ D. EEPROM,B. RAM,MEDIUM
+What is the function of the bus interface unit within a microprocessor?,"A.  Performs calculations involving floating-point numbers.//@ B.  Decodes program instructions into commands.//@ C. Receives instructions and data from main memory and sends processed data back.//@ D.  Manages the entire microprocessor, including fetching instructions and managing I/O.",C. Receives instructions and data from main memory and sends processed data back.,HARD

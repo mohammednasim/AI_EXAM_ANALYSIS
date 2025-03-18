@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Quiz Results</h1>
+    <p>Your Score: {{ score }}/{{ total }}</p>
+    <a href="/">Upload another PDF</a>
+</body>
+</html>

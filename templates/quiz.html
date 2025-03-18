@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Quiz</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">MCQ Quiz</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>{{ mode|title }} MCQs</h4>
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-info">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <div class="table-responsive mt-3">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Question Number</th>
+                                        <th>Question</th>
+                                        <th>Options</th>
+                                        <th>Correct Answer</th>
+                                        <th>Difficulty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for mcq in mcqs %}
+                                    <tr>
+                                        <td>{{ mcq.question_num }}</td>
+                                        <td>{{ mcq.question }}</td>
+                                        <td>{{ mcq.options|replace('//@', '<br>')|safe }}</td>
+                                        <td>{{ mcq.answer }}</td>
+                                        <td>{{ mcq.difficulty }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-3">
+                            <a href="/download_csv/{{ csv_filename }}" class="btn btn-success">Download CSV</a>
+                            {% if excel_filename %}
+                            <a href="/download_csv/{{ excel_filename }}" class="btn btn-primary">Download Excel</a>
+                            {% endif %}
+                            <a href="/" class="btn btn-secondary">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
