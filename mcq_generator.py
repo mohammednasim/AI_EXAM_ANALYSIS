@@ -22,69 +22,8 @@ def extract_text(file_path):
         return f"Error extracting text: {str(e)}"
     return text.strip()
 
-def extract_mcqs_from_pdf(text):
-    """Extracts existing MCQs from PDF text without changing them."""
-    patterns = [
-        r'(\d+)\.\s+(.*?)(?:\n|\r\n?)(A\)[.\s]+(.*?)(?:\n|\r\n?)B\)[.\s]+(.*?)(?:\n|\r\n?)C\)[.\s]+(.*?)(?:\n|\r\n?)D\)[.\s]+(.*?))(?:\n|\r\n?)(Student Answer: [a-d]\)[^\n\r]+)(?:\n|\r\n?)(Correct Answer: [a-d]\)[^\n\r]+)(?=\n\d+\.\s+|\Z)',
-        r'(Q\.\s*\d+)\.\s+(.*?)(?:\n|\r\n?)(\(a\)[.\s]+(.*?)(?:\n|\r\n?)\(b\)[.\s]+(.*?)(?:\n|\r\n?)\(c\)[.\s]+(.*?)(?:\n|\r\n?)\(d\)[.\s]+(.*?))(?:\n|\r\n?)(Student Answer: [a-d]\)[^\n\r]+)(?:\n|\r\n?)(Correct Answer: [a-d]\)[^\n\r]+)(?=\n\s*Q\.\s*\d+|$)',
-    ]
 
-    mcqs = []
 
-    for pattern in patterns:
-        matches = re.finditer(pattern, text, re.DOTALL | re.IGNORECASE)
-
-        for match in matches:
-            question_num = match.group(1).strip()
-            question_text = match.group(2).strip()
-            options_text = ""
-
-            # Extract options
-            if len(match.groups()) >= 4:
-                options_text = "A) " + match.group(3).strip() + "\nB) " + match.group(
-                    4).strip() + "\nC) " + match.group(5).strip() + "\nD) " + match.group(6).strip()
-
-            options = []
-            if 'A)' in options_text or 'A.' in options_text:
-                option_matches = re.findall(r'([A-D][.\s)])(.*?)(?=(?:[A-D][.\s)])|$)', options_text, re.DOTALL)
-                for opt_letter, opt_text in option_matches:
-                    options.append(f"{opt_letter} {opt_text.strip()}")
-            elif '(a)' in options_text or '(a)' in options_text:
-                option_matches = re.findall(r'\((a|b|c|d)\)[.\s)](.*?)(?=\([a-d]\)|$)', options_text, re.DOTALL)
-                for opt_letter, opt_text in option_matches:
-                    options.append(f"({opt_letter}) {opt_text.strip()}")
-
-            difficulty = "MEDIUM"
-
-            student_answer = ""
-            correct_answer = ""
-
-            # Extract student answer
-            if len(match.groups()) >= 8 and match.group(7):
-                student_answer_match = re.search(r'Student Answer: ([a-d])\)', match.group(7), re.IGNORECASE)
-                if student_answer_match:
-                    student_answer = student_answer_match.group(1).strip().upper()
-                    print(f"Extracted Student Answer for Q{question_num}: {student_answer}")  # Debug print
-
-            # Extract correct answer
-            if len(match.groups()) >= 9 and match.group(8):
-                correct_answer_match = re.search(r'Correct Answer: ([a-d])\)', match.group(8), re.IGNORECASE)
-                if correct_answer_match:
-                    correct_answer = correct_answer_match.group(1).strip().upper()
-                    print(f"Extracted Correct Answer for Q{question_num}: {correct_answer}")  # Debug print
-
-            mcq = {
-                'question_num': question_num,
-                'question': question_text,
-                'options': "//@ ".join(options),
-                'student_answer': student_answer,
-                'correct_answer': correct_answer,
-                'difficulty': difficulty
-            }
-
-            mcqs.append(mcq)
-
-    return mcqs
 def evaluate_single_pdf(file_path):
     """Evaluate student answers from a single PDF file."""
     extracted_text = extract_text(file_path)
@@ -125,12 +64,18 @@ def evaluate_single_pdf(file_path):
 
     return evaluation
 
+
+import re
+
+
+# In mcq_generator.py, update the extract_mcqs_from_pdf function:
+
 def extract_mcqs_from_pdf(text):
     """Extracts existing MCQs from PDF text without changing them."""
     # Regex patterns for different question formats
     patterns = [
-        r'(\d+)\.\s+(.*?)(?:\n|\r\n?)(A\)[.\s]+(.*?)(?:\n|\r\n?)B\)[.\s]+(.*?)(?:\n|\r\n?)C\)[.\s]+(.*?)(?:\n|\r\n?)D\)[.\s]+(.*?))(?:\n|\r\n?)(Student Answer: [a-d]\)[^\n\r]+)(?:\n|\r\n?)(Correct Answer: [a-d]\)[^\n\r]+)(?=\n\d+\.\s+|\Z)',
-        r'(Q\.\s*\d+)\.\s+(.*?)(?:\n|\r\n?)(\(a\)[.\s]+(.*?)(?:\n|\r\n?)\(b\)[.\s]+(.*?)(?:\n|\r\n?)\(c\)[.\s]+(.*?)(?:\n|\r\n?)\(d\)[.\s]+(.*?))(?:\n|\r\n?)(Student Answer: [a-d]\)[^\n\r]+)(?:\n|\r\n?)(Correct Answer: [a-d]\)[^\n\r]+)(?=\n\s*Q\.\s*\d+|$)',
+        r'(\d+)\.\s+(.*?)(?:\n|\r\n?)(A\)[.\s]+(.*?)(?:\n|\r\n?)B\)[.\s]+(.*?)(?:\n|\r\n?)C\)[.\s]+(.*?)(?:\n|\r\n?)D\)[.\s]+(.*?))(?:\n|\r\n?)(Student Answer:\s*([A-D]))(?:\n|\r\n?)(Correct Answer:\s*([A-D]))(?=\n\d+\.\s+|\Z)',
+        r'(Q\.\s*\d+)\.\s+(.*?)(?:\n|\r\n?)(\(a\)[.\s]+(.*?)(?:\n|\r\n?)\(b\)[.\s]+(.*?)(?:\n|\r\n?)\(c\)[.\s]+(.*?)(?:\n|\r\n?)\(d\)[.\s]+(.*?))(?:\n|\r\n?)(Student Answer:\s*([a-d]))(?:\n|\r\n?)(Correct Answer:\s*([a-d]))(?=\n\s*Q\.\s*\d+|$)',
     ]
 
     mcqs = []
@@ -141,13 +86,9 @@ def extract_mcqs_from_pdf(text):
         for match in matches:
             question_num = match.group(1).strip()
             question_text = match.group(2).strip()
-            options_text = ""
+            options_text = match.group(3).strip() if len(match.groups()) >= 3 else ""
 
-            if len(match.groups()) >= 4:
-                options_text = "A) " + match.group(3).strip() + "\nB) " + match.group(
-                    4).strip() + "\nC) " + match.group(5).strip() + "\nD) " + match.group(6).strip()
-
-            # Extract individual options
+            # Extract individual options in a cleaner format
             options = []
             if 'A)' in options_text or 'A.' in options_text:
                 option_matches = re.findall(r'([A-D][.\s)])(.*?)(?=(?:[A-D][.\s)])|$)', options_text, re.DOTALL)
@@ -158,25 +99,28 @@ def extract_mcqs_from_pdf(text):
                 for opt_letter, opt_text in option_matches:
                     options.append(f"({opt_letter}) {opt_text.strip()}")
 
+            # If no options were extracted but we have the text, add it as is
+            if not options and options_text:
+                options = [options_text]
+
             # Default to medium difficulty if not specified
             difficulty = "MEDIUM"
 
-            # Look for answer key in the document
+            # Extract student and correct answers
             student_answer = ""
             correct_answer = ""
-            if len(match.groups()) >= 8 and match.group(7):
-                student_answer_match = re.search(r'Student Answer: ([a-d])\)', match.group(7))
-                if student_answer_match:
-                    student_answer = student_answer_match.group(1).strip()
 
+            # Update the regex for answers to capture the letters properly
             if len(match.groups()) >= 9 and match.group(8):
-                correct_answer_match = re.search(r'Correct Answer: ([a-d])\)', match.group(8))
-                if correct_answer_match:
-                    correct_answer = correct_answer_match.group(1).strip()
+                student_answer = match.group(9).strip().upper() if match.group(9) else ""
+
+            if len(match.groups()) >= 11 and match.group(10):
+                correct_answer = match.group(11).strip().upper() if match.group(11) else ""
+
             mcq = {
                 'question_num': question_num,
                 'question': question_text,
-                'options': "//@ ".join(options),
+                'options': ", ".join(options),  # Join options with our separator
                 'student_answer': student_answer,
                 'correct_answer': correct_answer,
                 'difficulty': difficulty
@@ -189,8 +133,6 @@ def extract_mcqs_from_pdf(text):
         mcqs = ai_extract_mcqs(text)
 
     return mcqs
-
-
 def ai_extract_mcqs(text):
     """Use AI to extract MCQs when standard patterns fail."""
     model = genai.GenerativeModel("gemini-1.5-pro")
@@ -202,18 +144,17 @@ def ai_extract_mcqs(text):
 
     [Question Number]: The question number from the document
     [Question]: The question text here?
-    [Options]: Option A Option B Option C Option D
-    [Student Answer]: The student answer text here?
-    [Correct Answer]: The correct option (A, B, C, or D) if available
+    [Options]: A) Option A text//@ B) Option B text//@ C) Option C text//@ D) Option D text
+    [Student Answer]: The letter of the student's answer (A, B, C, or D)
+    [Correct Answer]: The letter of the correct option (A, B, C, or D)
     [Difficulty Level]: EASY or MEDIUM or HARD (assign an appropriate difficulty level)
 
     Important: 
     1. Use //@ as the separator between options.
     2. Keep the original question text and options EXACTLY as they appear in the document.
-    3. If answer keys are provided in the document, match them to the questions.
-    4. The difficulty level should be one of: EASY, MEDIUM, or HARD based on the complexity of the question.
-    5. Keep the original Student Answer text and options EXACTLY as they appear in the document.
-
+    3. Include the option letter (A, B, C, D) with each option.
+    4. For Student Answer and Correct Answer, extract ONLY the letter (A, B, C, or D).
+    5. The difficulty level should be one of: EASY, MEDIUM, or HARD based on the complexity of the question.
 
     TEXT:
     {text}
@@ -240,8 +181,10 @@ def ai_extract_mcqs(text):
                     mcq['question'] = line[line.find(':') + 1:].strip()
                 elif line.startswith('[Options]:'):
                     mcq['options'] = line[line.find(':') + 1:].strip()
+                elif line.startswith('[Student Answer]:'):
+                    mcq['student_answer'] = line[line.find(':') + 1:].strip()
                 elif line.startswith('[Correct Answer]:'):
-                    mcq['answer'] = line[line.find(':') + 1:].strip()
+                    mcq['correct_answer'] = line[line.find(':') + 1:].strip()
                 elif line.startswith('[Difficulty Level]:'):
                     mcq['difficulty'] = line[line.find(':') + 1:].strip()
 
@@ -250,8 +193,10 @@ def ai_extract_mcqs(text):
                 # Set default values if missing
                 if 'question_num' not in mcq:
                     mcq['question_num'] = str(len(mcqs) + 1)
-                if 'answer' not in mcq:
-                    mcq['answer'] = ""
+                if 'student_answer' not in mcq:
+                    mcq['student_answer'] = ""
+                if 'correct_answer' not in mcq:
+                    mcq['correct_answer'] = ""
                 if 'difficulty' not in mcq:
                     mcq['difficulty'] = "MEDIUM"
 
@@ -260,10 +205,6 @@ def ai_extract_mcqs(text):
         return mcqs
     except Exception as e:
         return [{"error": f"Error extracting MCQs: {str(e)}"}]
-
-
-
-
 def generate_mcqs(text, num_questions=5):
     """Legacy function to generate new MCQs. Kept for backwards compatibility."""
     model = genai.GenerativeModel("gemini-1.5-pro")
