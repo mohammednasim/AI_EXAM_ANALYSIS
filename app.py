@@ -1,3 +1,4 @@
+#app.py
 from flask import Flask, render_template, request, redirect, url_for, send_file, flash, session
 from mcq_generator import extract_text, generate_mcqs, extract_mcqs_from_pdf, \
     evaluate_single_pdf
@@ -127,25 +128,16 @@ def evaluate():
             file_path = os.path.join(app.config["UPLOAD_FOLDER"], uploaded_file.filename)
             uploaded_file.save(file_path)
 
-            extracted_text = extract_text(file_path)
-            mcqs = extract_mcqs_from_pdf(extracted_text)
+            # Use the updated evaluation function
+            evaluation = evaluate_single_pdf(file_path)
 
-            if not mcqs or (len(mcqs) == 1 and 'error' in mcqs[0]):
-                flash('Could not extract MCQs from the PDF. Please check the format.')
+            if "error" in evaluation:
+                flash(evaluation["error"])
                 return render_template("evaluation.html", evaluation=None)
 
-            evaluation = {
-                "student_answers": [],
-                "correct_answers": [],
-                "score": {"correct": 0, "total": len(mcqs), "percentage": 0},
-                "strengths": [],
-                "weaknesses": [],
-                "improvement_suggestions": []
-            }
-
+            # Create comparison data for the Answer Comparison table
             comparison = []
-
-            for mcq in mcqs:
+            for mcq in extract_mcqs_from_pdf(extract_text(file_path)):
                 student_answer = mcq.get('student_answer', '').strip()
                 correct_answer = mcq.get('correct_answer', '').strip()
 
@@ -153,50 +145,41 @@ def evaluate():
                 options_text = mcq.get('options', '')
                 options_list = options_text.split("//@ ") if "//@ " in options_text else [options_text]
 
-                evaluation["student_answers"].append(
-                    {"question_num": mcq['question_num'], "selected_option": student_answer,
-                     "question": mcq['question']})
-                evaluation["correct_answers"].append(
-                    {"question_num": mcq['question_num'], "correct_option": correct_answer,
-                     "question": mcq['question']})
-
                 is_correct = student_answer.upper() == correct_answer.upper()
-                if is_correct:
-                    evaluation["score"]["correct"] += 1
-
                 comparison.append({
                     "question_num": mcq['question_num'],
                     "question": mcq['question'],
-                    "options": options_list,  # Add options to the comparison data
+                    "options": options_list,
                     "selected_option": student_answer,
                     "correct_option": correct_answer,
                     "is_correct": is_correct
                 })
 
-            evaluation["score"]["percentage"] = (evaluation["score"]["correct"] / evaluation["score"]["total"]) * 100 if \
-            evaluation["score"]["total"] > 0 else 0
-
-            # Generate feedback based on performance
-            if evaluation["score"]["percentage"] >= 85:
-                evaluation["strengths"].append("Excellent performance! You've answered most questions correctly.")
-            elif evaluation["score"]["percentage"] >= 70:
-                evaluation["strengths"].append("Good performance! You've answered a majority of questions correctly.")
-            elif evaluation["score"]["percentage"] >= 50:
-                evaluation["strengths"].append(
-                    "Average performance. You've answered about half the questions correctly.")
-            else:
-                evaluation["weaknesses"].append("Needs improvement. You should review the incorrect answers carefully.")
-
-            evaluation["improvement_suggestions"].append("Review incorrect answers and understand the concepts better.")
-            evaluation["improvement_suggestions"].append(
-                "Consider studying the topics covered in the incorrect questions more thoroughly.")
-            evaluation["improvement_suggestions"].append("Practice similar questions to improve your understanding.")
-
             # Create CSV file
             csv_filename = f"evaluation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
             csv_path = os.path.join(app.config["CSV_FOLDER"], csv_filename)
 
-            df = pd.DataFrame(comparison)
+            # Create a more detailed DataFrame for the CSV
+            df_data = []
+            for category, perf in evaluation["specialty_performance"].items():
+                df_data.append({
+                    "Category": category,
+                    "Score": f"{perf['correct']}/{perf['total']}",
+                    "Percentage": f"{perf['percentage']:.1f}%"
+                })
+
+            df = pd.DataFrame(df_data)
+
+            # Add overall score
+            df = pd.concat([
+                pd.DataFrame([{
+                    "Category": "OVERALL SCORE",
+                    "Score": f"{evaluation['score']['correct']}/{evaluation['score']['total']}",
+                    "Percentage": f"{evaluation['score']['percentage']:.1f}%"
+                }]),
+                df
+            ])
+
             df.to_csv(csv_path, index=False)
 
             return render_template("evaluation.html",

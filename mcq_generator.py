@@ -1,3 +1,4 @@
+#mcq_generator.py
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
@@ -23,25 +24,64 @@ def extract_text(file_path):
     return text.strip()
 
 
-
 def evaluate_single_pdf(file_path):
-    """Evaluate student answers from a single PDF file."""
+    """Evaluate student answers from a single PDF file with detailed analysis."""
     extracted_text = extract_text(file_path)
     mcqs = extract_mcqs_from_pdf(extracted_text)
 
     if not mcqs or (len(mcqs) == 1 and 'error' in mcqs[0]):
         return {"error": "Could not extract MCQs from the PDF. Please check the format."}
 
+    # Initialize evaluation structure
     evaluation = {
         "student_answers": [],
         "correct_answers": [],
         "score": {"correct": 0, "total": len(mcqs), "percentage": 0},
         "strengths": [],
         "weaknesses": [],
-        "improvement_suggestions": []
+        "improvement_suggestions": [],
+        "specialty_performance": {},
+        "upsc_fit_assessment": ""
     }
 
+    # Initialize categories based on UPSC pattern
+    categories = {
+        "General Knowledge & Current Affairs": [],
+        "Indian Polity & Governance": [],
+        "Indian Economy": [],
+        "Geography & Environment": [],
+        "Science & Technology": []
+    }
+
+    # Determine question category based on number ranges
     for mcq in mcqs:
+        q_num = 0
+        if isinstance(mcq.get('question_num', ''), str) and mcq['question_num'].isdigit():
+            q_num = int(mcq['question_num'])
+        elif isinstance(mcq.get('question_num', ''), int):
+            q_num = mcq['question_num']
+
+        # Assign category based on question number ranges
+        if 1 <= q_num <= 5:
+            category = "General Knowledge & Current Affairs"
+        elif 6 <= q_num <= 10:
+            category = "Indian Polity & Governance"
+        elif 11 <= q_num <= 15:
+            category = "Indian Economy"
+        elif 16 <= q_num <= 20:
+            category = "Geography & Environment"
+        elif 21 <= q_num <= 25:
+            category = "Science & Technology"
+        else:
+            # Default category if question number doesn't fit known ranges
+            category = "Miscellaneous"
+            if "Miscellaneous" not in categories:
+                categories["Miscellaneous"] = []
+
+        # Store question in its category
+        if category in categories:
+            categories[category].append(mcq)
+
         student_answer = mcq.get('student_answer', '').strip()
         correct_answer = mcq.get('correct_answer', '').strip()
 
@@ -50,20 +90,70 @@ def evaluate_single_pdf(file_path):
         evaluation["correct_answers"].append(
             {"question_num": mcq['question_num'], "correct_option": correct_answer, "question": mcq['question']})
 
-        if student_answer == correct_answer:
+        if student_answer.upper() == correct_answer.upper():
             evaluation["score"]["correct"] += 1
 
-    evaluation["score"]["percentage"] = (evaluation["score"]["correct"] / evaluation["score"]["total"]) * 100
+    # Calculate overall score
+    evaluation["score"]["percentage"] = (evaluation["score"]["correct"] / evaluation["score"]["total"]) * 100 if \
+    evaluation["score"]["total"] > 0 else 0
 
+    # Calculate category-wise performance
+    for category, questions in categories.items():
+        if questions:  # Only process categories with questions
+            correct = sum(
+                1 for q in questions if q.get('student_answer', '').upper() == q.get('correct_answer', '').upper())
+            total = len(questions)
+            percentage = (correct / total) * 100 if total > 0 else 0
+
+            evaluation["specialty_performance"][category] = {
+                "correct": correct,
+                "total": total,
+                "percentage": percentage
+            }
+
+    # Identify strengths and weaknesses based on category performance
+    for category, perf in evaluation["specialty_performance"].items():
+        if perf["percentage"] >= 80:
+            evaluation["strengths"].append(f"Strong understanding of {category} ({perf['percentage']:.1f}%)")
+        elif perf["percentage"] <= 40:
+            evaluation["weaknesses"].append(f"Needs significant improvement in {category} ({perf['percentage']:.1f}%)")
+            evaluation["improvement_suggestions"].append(
+                f"Focus on studying {category} concepts and practice more questions in this area")
+        elif perf["percentage"] < 60:
+            evaluation["weaknesses"].append(f"Below average performance in {category} ({perf['percentage']:.1f}%)")
+            evaluation["improvement_suggestions"].append(f"Review basic concepts in {category} and practice regularly")
+
+    # UPSC fit assessment
     if evaluation["score"]["percentage"] >= 75:
-        evaluation["strengths"].append("High performance")
+        evaluation[
+            "upsc_fit_assessment"] = "Based on your performance, you show good potential for the UPSC examination. Your overall score indicates a strong foundation in the tested subjects."
+    elif evaluation["score"]["percentage"] >= 60:
+        evaluation[
+            "upsc_fit_assessment"] = "You show moderate potential for the UPSC examination. With focused preparation in your weaker areas, you can improve your chances significantly."
     else:
-        evaluation["weaknesses"].append("Needs improvement")
+        evaluation[
+            "upsc_fit_assessment"] = "Your current performance suggests you need substantial preparation before attempting the UPSC examination. Focus on building a stronger foundation in all subjects, particularly in your weaker areas."
 
-    evaluation["improvement_suggestions"].append("Review incorrect answers and understand the concepts better.")
+    # Add general feedback based on performance
+    if evaluation["score"]["percentage"] >= 85:
+        evaluation["strengths"].append(
+            "Excellent overall performance! You've demonstrated a strong grasp of most subjects.")
+    elif evaluation["score"]["percentage"] >= 70:
+        evaluation["strengths"].append("Good overall performance. You have a solid foundation in most areas.")
+    elif evaluation["score"]["percentage"] >= 50:
+        evaluation["strengths"].append("Average overall performance. You have a basic understanding of most subjects.")
+    else:
+        evaluation["weaknesses"].append(
+            "Overall performance needs significant improvement. Consider a structured study plan.")
+
+    # Add generic improvement suggestions if none were added from category analysis
+    if not evaluation["improvement_suggestions"]:
+        evaluation["improvement_suggestions"].append("Review incorrect answers and understand the underlying concepts")
+        evaluation["improvement_suggestions"].append(
+            "Practice questions from previous year papers to improve test-taking skills")
+        evaluation["improvement_suggestions"].append("Create a structured study plan focusing on your weaker areas")
 
     return evaluation
-
 
 import re
 
@@ -205,6 +295,8 @@ def ai_extract_mcqs(text):
         return mcqs
     except Exception as e:
         return [{"error": f"Error extracting MCQs: {str(e)}"}]
+
+
 def generate_mcqs(text, num_questions=5):
     """Legacy function to generate new MCQs. Kept for backwards compatibility."""
     model = genai.GenerativeModel("gemini-1.5-pro")

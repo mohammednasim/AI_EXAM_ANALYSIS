@@ -1,3 +1,5 @@
+<!-- evaluation.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,16 +25,7 @@
 
                         <h4 class="mt-4">Detailed Feedback</h4>
                         <div class="card mt-3">
-                            <div class="card-header">
-                                <h5>Strengths</h5>
-                            </div>
-                            <div class="card-body">
-                                <ul>
-                                    {% for strength in evaluation.strengths %}
-                                    <li>{{ strength }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                            
                         </div>
 
                         <div class="card mt-3">
@@ -60,6 +53,63 @@
                                 </ul>
                             </div>
                         </div>
+                        <!-- Improvement sections to add to evaluation.html -->
+                        {% if evaluation %}
+                        <!-- Add this after the "Improvement Suggestions" section and before the "Answer Comparison" section -->
+
+                        <div class="card mt-3">
+                            <div class="card-header bg-info text-white">
+                                <h5>UPSC Fit Assessment</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert {% if evaluation.score.percentage >= 75 %}alert-success{% elif evaluation.score.percentage >= 60 %}alert-warning{% else %}alert-danger{% endif %}">
+                                    <p>{{ evaluation.upsc_fit_assessment }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header bg-primary text-white">
+                                <h5>Specialty-wise Performance</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Category</th>
+                                                <th>Score</th>
+                                                <th>Percentage</th>
+                                                <th>Performance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for category, perf in evaluation.specialty_performance.items() %}
+                                            <tr>
+                                                <td>{{ category }}</td>
+                                                <td>{{ perf.correct }}/{{ perf.total }}</td>
+                                                <td>{{ "%.1f"|format(perf.percentage) }}%</td>
+                                                <td>
+                                                    {% if perf.percentage >= 80 %}
+                                                        <span class="badge bg-success">Excellent</span>
+                                                    {% elif perf.percentage >= 70 %}
+                                                        <span class="badge bg-info">Good</span>
+                                                    {% elif perf.percentage >= 60 %}
+                                                        <span class="badge bg-primary">Average</span>
+                                                    {% elif perf.percentage >= 40 %}
+                                                        <span class="badge bg-warning">Below Average</span>
+                                                    {% else %}
+                                                        <span class="badge bg-danger">Needs Improvement</span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
 
                         <!-- Replace the current table in evaluation.html with this updated one -->
                         <h4 class="mt-4">Answer Comparison</h4>
