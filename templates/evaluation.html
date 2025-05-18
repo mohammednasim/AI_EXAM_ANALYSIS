@@ -1,173 +1,112 @@
+<!--evaluation.html-->
 <!-- evaluation.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluation Results</title>
+    <title>Detailed Evaluation Results</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="mb-0">Evaluation Results</h3>
-                    </div>
-                    <div class="card-body">
-                        {% if evaluation %}
-                        <h4>Summary</h4>
-                        <div class="alert alert-success">
-                            <p>Score: {{ evaluation.score.correct }}/{{ evaluation.score.total }} ({{ evaluation.score.percentage }}%)</p>
-                        </div>
+        <div class="card shadow p-4">
+            <h2 class="text-center mb-4">Evaluation Report</h2>
 
-                        <h4 class="mt-4">Detailed Feedback</h4>
-                        <div class="card mt-3">
-                            
-                        </div>
+            {% if evaluation %}
+                <h4 class="mb-3">Overall Performance</h4>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item">Correct Answers: {{ evaluation.score.correct }}</li>
+                    <li class="list-group-item">Total Questions: {{ evaluation.score.total }}</li>
+                    <li class="list-group-item">Score Percentage: {{ evaluation.score.percentage }}%</li>
+                </ul>
 
-                        <div class="card mt-3">
-                            <div class="card-header">
-                                <h5>Areas for Improvement</h5>
-                            </div>
-                            <div class="card-body">
+                <h4 class="mb-3">Specialty Performance</h4>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category, perf in evaluation.specialty_performance.items() %}
+                        <tr>
+                            <td>{{ category }}</td>
+                            <td>{{ perf.correct }}/{{ perf.total }}</td>
+                            <td>{{ perf.percentage }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h4 class="mb-3">Strengths</h4>
+                <ul class="list-group mb-4">
+                    {% for item in evaluation.strengths %}
+                    <li class="list-group-item">{{ item }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h4 class="mb-3">Weaknesses</h4>
+                <ul class="list-group mb-4">
+                    {% for item in evaluation.weaknesses %}
+                    <li class="list-group-item">{{ item }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h4 class="mb-3">Improvement Suggestions</h4>
+                <ul class="list-group mb-4">
+                    {% for item in evaluation.improvement_suggestions %}
+                    <li class="list-group-item">{{ item }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h4 class="mb-3">UPSC Fit Assessment</h4>
+                <p class="alert alert-info">{{ evaluation.upsc_fit_assessment }}</p>
+
+                <h4 class="mb-3">Answer Comparison</h4>
+                <table class="table table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Q#</th>
+                            <th>Question</th>
+                            <th>Options</th>
+                            <th>Selected</th>
+                            <th>Correct</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in comparison %}
+                        <tr class="{% if item.is_correct %}table-success{% else %}table-danger{% endif %}">
+                            <td>{{ item.question_num }}</td>
+                            <td>{{ item.question }}</td>
+                            <td>
                                 <ul>
-                                    {% for weakness in evaluation.weaknesses %}
-                                    <li>{{ weakness }}</li>
-                                    {% endfor %}
+                                {% for opt in item.options %}
+                                    <li>{{ opt }}</li>
+                                {% endfor %}
                                 </ul>
-                            </div>
-                        </div>
+                            </td>
+                            <td>{{ item.selected_option }}</td>
+                            <td>{{ item.correct_option }}</td>
+                            <td>{{ "Correct" if item.is_correct else "Incorrect" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
 
-                        <div class="card mt-3">
-                            <div class="card-header">
-                                <h5>Improvement Suggestions</h5>
-                            </div>
-                            <div class="card-body">
-                                <ul>
-                                    {% for suggestion in evaluation.improvement_suggestions %}
-                                    <li>{{ suggestion }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- Improvement sections to add to evaluation.html -->
-                        {% if evaluation %}
-                        <!-- Add this after the "Improvement Suggestions" section and before the "Answer Comparison" section -->
-
-                        <div class="card mt-3">
-                            <div class="card-header bg-info text-white">
-                                <h5>UPSC Fit Assessment</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="alert {% if evaluation.score.percentage >= 75 %}alert-success{% elif evaluation.score.percentage >= 60 %}alert-warning{% else %}alert-danger{% endif %}">
-                                    <p>{{ evaluation.upsc_fit_assessment }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card mt-3">
-                            <div class="card-header bg-primary text-white">
-                                <h5>Specialty-wise Performance</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Category</th>
-                                                <th>Score</th>
-                                                <th>Percentage</th>
-                                                <th>Performance</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for category, perf in evaluation.specialty_performance.items() %}
-                                            <tr>
-                                                <td>{{ category }}</td>
-                                                <td>{{ perf.correct }}/{{ perf.total }}</td>
-                                                <td>{{ "%.1f"|format(perf.percentage) }}%</td>
-                                                <td>
-                                                    {% if perf.percentage >= 80 %}
-                                                        <span class="badge bg-success">Excellent</span>
-                                                    {% elif perf.percentage >= 70 %}
-                                                        <span class="badge bg-info">Good</span>
-                                                    {% elif perf.percentage >= 60 %}
-                                                        <span class="badge bg-primary">Average</span>
-                                                    {% elif perf.percentage >= 40 %}
-                                                        <span class="badge bg-warning">Below Average</span>
-                                                    {% else %}
-                                                        <span class="badge bg-danger">Needs Improvement</span>
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        <!-- Replace the current table in evaluation.html with this updated one -->
-                        <h4 class="mt-4">Answer Comparison</h4>
-                        <div class="table-responsive mt-3">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Question Number</th>
-                                        <th>Full Question</th>
-                                        <th>Options</th>
-                                        <th>Student Answer</th>
-                                        <th>Correct Answer</th>
-                                        <th>Result</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for item in comparison %}
-                                    <tr>
-                                        <td>{{ item.question_num }}</td>
-                                        <td>{{ item.question }}</td>
-                                        <td>
-                                            <!-- Display options as a list -->
-                                            <ul class="list-unstyled mb-0">
-                                                {% for option in item.options %}
-                                                    <li>{{ option }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                        </td>
-                                        <td>{{ item.selected_option }}</td>
-                                        <td>{{ item.correct_option }}</td>
-                                        <td>
-                                            {% if item.is_correct %}
-                                            <span class="badge bg-success">Correct</span>
-                                            {% else %}
-                                            <span class="badge bg-danger">Incorrect</span>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                        </div>
-
-                        <div class="mt-3">
-                            <a href="/download_csv/{{ csv_filename }}" class="btn btn-success">Download Evaluation Report</a>
-                            <a href="/" class="btn btn-secondary">Back to Home</a>
-                        </div>
-                        {% else %}
-                        <div class="alert alert-warning">
-                            <p>No questions were extracted from the PDF. Please check the format of the uploaded file.</p>
-                        </div>
-                        {% endif %}
-                    </div>
+                <div class="mt-4 d-flex gap-3">
+                    <a href="{{ url_for('download_pdf', filename=csv_filename) }}" class="btn btn-primary">Download PDF Report</a>
+                    <a href="{{ url_for('download_csv', filename=csv_filename) }}" class="btn btn-secondary">Download CSV</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-dark">Back to Home</a>
                 </div>
-            </div>
+
+            {% else %}
+                <div class="alert alert-warning">No evaluation data available.</div>
+            {% endif %}
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
